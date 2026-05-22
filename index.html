@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class 5 — Our Space!</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1A7A6E;
+    --gold: #F5B731;
+    --coral: #FF6B6B;
+    --purple: #7C5CBF;
+    --blue: #4A90D9;
+    --green: #52C97A;
+    --pink: #F06292;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: #FFF9F0; min-height: 100vh; overflow-x: hidden; }
+
+  .hero {
+    background: linear-gradient(135deg, #1A7A6E 0%, #4A90D9 50%, #7C5CBF 100%);
+    padding: 3rem 1.5rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-emoji { font-size: 3.5rem; margin-bottom: 0.5rem; display: block; animation: bounce 2s infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .hero h1 { font-family: 'Fredoka One', cursive; font-size: 2.8rem; color: white; line-height: 1.1; margin-bottom: 0.5rem; text-shadow: 3px 3px 0 rgba(0,0,0,0.15); }
+  .hero p { font-size: 1.1rem; color: rgba(255,255,255,0.9); font-weight: 600; }
+  .star { position: absolute; font-size: 1.2rem; animation: twinkle 3s infinite; opacity: 0.7; }
+  @keyframes twinkle { 0%,100%{opacity:0.3;transform:scale(1)} 50%{opacity:1;transform:scale(1.3)} }
+
+  .container { max-width: 700px; margin: 0 auto; padding: 2rem 1.2rem; }
+  .section-title { font-family: 'Fredoka One', cursive; font-size: 1.8rem; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
+
+  /* SONGS */
+  .songs-section { margin-bottom: 2.5rem; }
+  .songs-section .section-title { color: var(--coral); }
+
+  .song-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.8rem;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    border-left: 5px solid var(--coral);
+    overflow: hidden;
+  }
+
+  .song-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+  }
+
+  .song-num { font-family: 'Fredoka One', cursive; font-size: 1.4rem; min-width: 32px; }
+  .song-riddle { flex: 1; font-size: 0.88rem; font-weight: 700; color: #444; font-style: italic; }
+  .toggle-btn {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .toggle-btn.open { transform: rotate(45deg); }
+
+  .song-reveal {
+    display: none;
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+    border-top: 1px dashed #eee;
+  }
+  .song-reveal.show { display: block; }
+
+  .song-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: #f5f5f5;
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+    text-decoration: none;
+    color: #333;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: background 0.2s;
+  }
+  .song-link-btn:hover { background: #eee; }
+
+  /* color themes per card */
+  .c1 { border-color: #FF6B6B; } .c1 .song-num { color: #FF6B6B; } .c1 .toggle-btn { background: #FF6B6B; }
+  .c2 { border-color: #F5B731; } .c2 .song-num { color: #F5B731; } .c2 .toggle-btn { background: #F5B731; }
+  .c3 { border-color: #52C97A; } .c3 .song-num { color: #52C97A; } .c3 .toggle-btn { background: #52C97A; }
+  .c4 { border-color: #4A90D9; } .c4 .song-num { color: #4A90D9; } .c4 .toggle-btn { background: #4A90D9; }
+  .c5 { border-color: #7C5CBF; } .c5 .song-num { color: #7C5CBF; } .c5 .toggle-btn { background: #7C5CBF; }
+  .c6 { border-color: #F06292; } .c6 .song-num { color: #F06292; } .c6 .toggle-btn { background: #F06292; }
+  .c7 { border-color: #1A7A6E; } .c7 .song-num { color: #1A7A6E; } .c7 .toggle-btn { background: #1A7A6E; }
+
+  /* GAME */
+  .game-section { margin-bottom: 2.5rem; }
+  .game-section .section-title { color: var(--purple); }
+  .game-card {
+    background: linear-gradient(135deg, #7C5CBF, #4A90D9);
+    border-radius: 20px; padding: 1.5rem; text-align: center;
+    color: white; text-decoration: none; display: block;
+    box-shadow: 0 6px 20px rgba(124,92,191,0.3);
+    transition: transform 0.2s;
+  }
+  .game-card:hover { transform: scale(1.02); }
+  .game-card .game-emoji { font-size: 3rem; display: block; margin-bottom: 0.5rem; }
+  .game-card h3 { font-family: 'Fredoka One', cursive; font-size: 1.5rem; margin-bottom: 0.3rem; }
+  .game-card p { font-size: 0.9rem; opacity: 0.9; }
+  .game-btn { display: inline-block; margin-top: 1rem; background: white; color: var(--purple); font-weight: 800; padding: 0.5rem 1.5rem; border-radius: 20px; font-size: 0.9rem; }
+
+  /* AUDIO */
+  .audio-section { margin-bottom: 2.5rem; }
+  .audio-section .section-title { color: var(--teal); }
+  .audio-card {
+    background: linear-gradient(135deg, #1A7A6E, #52C97A);
+    border-radius: 20px; padding: 1.5rem; text-align: center;
+    color: white; box-shadow: 0 6px 20px rgba(26,122,110,0.3);
+  }
+  .audio-card .audio-emoji { font-size: 3rem; display: block; margin-bottom: 0.5rem; }
+  .audio-card h3 { font-family: 'Fredoka One', cursive; font-size: 1.5rem; margin-bottom: 0.3rem; }
+  .audio-card p { font-size: 0.9rem; opacity: 0.9; }
+  .coming-soon { display: inline-block; margin-top: 1rem; background: rgba(255,255,255,0.25); color: white; font-weight: 800; padding: 0.5rem 1.5rem; border-radius: 20px; font-size: 0.9rem; border: 2px dashed rgba(255,255,255,0.5); }
+
+  .footer { text-align: center; padding: 2rem 1rem; background: #1A7A6E; color: white; }
+  .footer p { font-family: 'Fredoka One', cursive; font-size: 1.1rem; opacity: 0.9; }
+  .footer small { font-size: 0.8rem; opacity: 0.6; display: block; margin-top: 0.3rem; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="star" style="top:10%;left:8%;animation-delay:0s">⭐</span>
+  <span class="star" style="top:20%;left:85%;animation-delay:0.5s">🌟</span>
+  <span class="star" style="top:60%;left:5%;animation-delay:1s">✨</span>
+  <span class="star" style="top:70%;left:90%;animation-delay:1.5s">⭐</span>
+  <span class="hero-emoji">🎉</span>
+  <h1>Goodbye, Class 5!</h1>
+  <p>Your music, your game, your memories — all in one place 🎵🎮</p>
+</div>
+
+<div class="container">
+
+  <div class="songs-section">
+    <div class="section-title">🎤 Our Songs — Can you guess them?</div>
+
+    <div class="song-card c1">
+      <div class="song-header" onclick="toggle(this)">
+        <div class="song-num">1 🎵</div>
+        <div class="song-riddle">"I'm not above, I'm not below... but where exactly did you go?"</div>
+        <button class="toggle-btn">+</button>
+      </div>
+      <div class="song-reveal">
+        <a class="song-link-btn" href="https://youtu.be/QYerFOnPxu8?si=RamzDGyeq1F3otEL" target="_blank">▶ Play on YouTube</a>
+      </div>
+    </div>
+
+    <div class="song-card c2">
+      <div class="song-header" onclick="toggle(this)">
+        <div class="song-num">2 🎵</div>
+        <div class="song-riddle">"This song is about the best thing in the world — and you're looking at it right now."</div>
+        <button class="toggle-btn">+</button>
+      </div>
+      <div class="song-reveal">
+        <a class="song-link-btn" href="https://youtu.be/79XG5qim7mc?si=LPZIYJNgzNQ0KQjG" target="_blank">▶ Play on YouTube</a>
+      </div>
+    </div>
+
+    <div class="song-card c3">
+      <div class="song-header" onclick="toggle(this)">
+        <div class="song-num">3 🎵</div>
+        <div class="song-riddle">"Time to spend some money! Where are we going?"</div>
+        <button class="toggle-btn">+</button>
+      </div>
+      <div class="song-reveal">
+        <a class="song-link-btn" href="https://youtu.be/75wLf80Yb84?si=Rq3ziwwX4IXhzBil" target="_blank">▶ Play on YouTube</a>
+      </div>
+    </div>
+
+    <div class="song-card c4">
+      <div class="song-header" onclick="toggle(this)">
+        <div class="song-num">4 🎵</div>
+        <div class="song-riddle">"If you know this song, do something with your hands..."</div>
+        <button class="toggle-btn">+</button>
+      </div>
+      <div class="song-reveal">
+        <a class="song-link-btn" href="https://youtu.be/71hqRT9U0wg?si=fN2NDWN4rEswR65n" target="_blank">▶ Play on YouTube</a>
+      </div>
+    </div>
+
+    <div class="song-card c5">
+      <div class="song-header" onclick="toggle(this)">
+        <div class="song-num">5 🎵</div>
+        <div class="song-riddle">"A skeleton in a band — this one plays, that one dances, these ones rock and those ones roll!"</div>
+        <button class="toggle-btn">+</button>
+      </div>
+      <div class="song-reveal">
+        <a class="song-link-btn" href="https://youtu.be/43WBw6ChGMs?si=OD9dSB2gryk03czG" target="_blank">▶ Play on YouTube</a>
+      </div>
+    </div>
+
+    <div class="song-card c6">
+      <div class="song-header" onclick="toggle(this)">
+        <div class="song-num">6 🎵</div>
+        <div class="song-riddle">"This song comes once a year — and it starts with Feliz... 🎄"</div>
+        <button class="toggle-btn">+</button>
+      </div>
+      <div class="song-reveal">
+        <a class="song-link-btn" href="https://youtu.be/GTZXYEsvKvM?si=dxLJ3nGssMUPoBU_" target="_blank">▶ Play on YouTube</a>
+      </div>
+    </div>
+
+    <div class="song-card c7">
+      <div class="song-header" onclick="toggle(this)">
+        <div class="song-num">7 🎵</div>
+        <div class="song-riddle">"Three little words. A Christmas gift from our Spanish Erasmus friends — can you remember it?"</div>
+        <button class="toggle-btn">+</button>
+      </div>
+      <div class="song-reveal">
+        <a class="song-link-btn" href="https://youtu.be/AoNva6raHhE?si=qYm8SifAqwsjaqdU" target="_blank">▶ Play on YouTube</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="game-section">
+    <div class="section-title">🎯 Our Game</div>
+    <a class="game-card" href="https://wordwall.net/play/34102/622/803" target="_blank">
+      <span class="game-emoji">🎡</span>
+      <h3>The Class 5 Wheel!</h3>
+      <p>Spin the wheel — who's next? 😄</p>
+      <span class="game-btn">Let's spin! →</span>
+    </a>
+  </div>
+
+  <div class="audio-section">
+    <div class="section-title">🎙️ A Message from Mrs Bab</div>
+    <div class="audio-card">
+      <span class="audio-emoji">🎙️</span>
+      <h3>Mrs Bab's voice note</h3>
+      <p>A special message, just for you — coming very soon!</p>
+      <span class="coming-soon">Coming soon... 🎶</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>Made with ❤️ by Mrs Bab · Class 5, Fiesse · 2025–2026</p>
+  <small>Mrs Bab Editions</small>
+</div>
+
+<script>
+function toggle(header) {
+  const reveal = header.nextElementSibling;
+  const btn = header.querySelector('.toggle-btn');
+  reveal.classList.toggle('show');
+  btn.classList.toggle('open');
+}
+</script>
+
+</body>
+</html>
